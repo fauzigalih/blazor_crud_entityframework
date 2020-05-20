@@ -1,0 +1,72 @@
+﻿@page "/employee";
+@using blazor_crud.Data;
+@inject EmployeeService objEmployeeService;
+@inject IJSRuntime JsRuntime;
+
+<h1>Employee Information</h1>
+@if (objEmp == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <a class="btn btn-primary" href="add-employee">
+        <span class="oi oi-plus" aria-hidden="true"></span> Create
+    </a><br />
+    <table class="table">
+        <thead>
+            <tr>
+                <th>No.</th>
+                <th>Name</th>
+                <th>Gender</th>
+                <th>City</th>
+                <th>Country</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var emp in objEmp)
+            {
+                var id = emp.EmployeeId;
+                <tr>
+                    <td>@(no++)</td>
+                    <td>@emp.Name</td>
+                    <td>@emp.Gender</td>
+                    <td>@emp.City</td>
+                    <td>@emp.Country</td>
+                    <td>
+                        <a class="btn btn-primary" href="edit-employee/@emp.EmployeeId">
+                            <span class="oi oi-pencil" aria-hidden="true"></span> Edit
+                        </a>
+                        <a class="btn btn-danger" href="employee" @onclick="@(() => ConfirmDelete(id))">
+                            <span class="oi oi-trash" aria-hidden="true"></span> Delete
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    int no = 1;
+    List<EmployeeInfo> objEmp;
+    protected override async Task OnInitializedAsync()
+    {
+        objEmp = await Task.Run(() => objEmployeeService.GetEmployee());
+    }
+
+    protected async Task ConfirmDelete(int id)
+    {
+        bool confirmed = await JsRuntime.InvokeAsync<bool>("confirm", "Are you sure to delete this item?");
+        if (confirmed)
+        {
+            // Delete
+            EmployeeInfo objEmp1 = new EmployeeInfo();
+            objEmp1 = objEmployeeService.GetEmployeeById(id);
+            objEmployeeService.DeleteEmployee(objEmp1);
+
+            objEmp = await Task.Run(() => objEmployeeService.GetEmployee());
+        }
+    }
+}
