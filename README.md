@@ -1,5 +1,6 @@
 # blazor_crud_entityframework
  This project build with template Blazor
+ 
  Status: <b>Release Version 1.0</b>
  
  # Technology
