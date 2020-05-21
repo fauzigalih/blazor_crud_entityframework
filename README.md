@@ -19,6 +19,6 @@
 2. Create database ex: blazor_crud
 3. Setting connection database in <code>appsettings.json</code>
 4. Run CLI <code>update-database</code> , this is action for migration database. (Will created table migration and table employee).
-4. Finish..
+5. Finish..
 
 <br><br><br>Created by: <a href="https://www.instagram.com/fauzigalihajisaputro/">@fauzigalihajisaputro</a>
