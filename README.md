@@ -13,6 +13,7 @@
  # Required Project
  1. SQL Server
  2. Visual Studio IDE or another
+ 3. Net core SDK v.3.1
  
  # Instalation
 1. Clone this project with new repository or download project file
